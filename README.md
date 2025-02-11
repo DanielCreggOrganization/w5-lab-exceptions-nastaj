@@ -83,22 +83,19 @@ Java provides several built-in exceptions that represent common error conditions
 - **`IOException`**: Signals that an input/output operation has failed.
 
 ### Example
+In this example, we intentionally trigger a `NullPointerException` by calling a method on a null reference. This try-catch block demonstrates how to handle an exception without giving away the solution for the DIY exercise.
+
 ```java
 public class CommonExceptions {
     public static void main(String[] args) {
-        // Uncomment each section to see the exception in action.
-        
-        // 1. NullPointerException example:
-        // String text = null;
-        // System.out.println(text.length());
-        
-        // 2. ArrayIndexOutOfBoundsException example:
-        int[] numbers = {1, 2, 3};
-        // System.out.println(numbers[5]);
-
-        // 3. ArithmeticException example:
-        // int result = 10 / 0;
-        // System.out.println(result);
+        String text = null;
+        try {
+            // This will throw a NullPointerException because 'text' is null.
+            int length = text.length();
+            System.out.println("Length: " + length);
+        } catch (NullPointerException e) {
+            System.out.println("Caught NullPointerException: " + e.getMessage());
+        }
     }
 }
 ```
@@ -106,12 +103,16 @@ public class CommonExceptions {
 <details>
 <summary>Expected Output</summary>
 
-If you uncomment any of the problematic lines, you will see the corresponding exception message (for example, a NullPointerException or ArrayIndexOutOfBoundsException).
+```
+Caught NullPointerException: null
+```
+
+*Note: The exact message may vary depending on your implementation.*
 </details>
 
 ### DIY Exercise 🔦
-- **Task**: Write a short Java program that intentionally triggers an `ArithmeticException` by dividing an integer by zero.  
-- **Hint**: Wrap the division in a try-catch block and print the exception message in the catch block.
+- **Task**: Write a short Java program that intentionally triggers an `ArithmeticException` by performing a division operation that results in a division by zero. Use a try-catch block to handle the exception.
+- **Hint**: Although the example above uses a `NullPointerException`, your solution should use an arithmetic operation that causes an `ArithmeticException`.
 
 <details>
 <summary>Expected Output</summary>
@@ -120,7 +121,7 @@ If you uncomment any of the problematic lines, you will see the corresponding ex
 Caught ArithmeticException: / by zero
 ```
 
-*Note: The exact message may vary depending on your implementation.*
+*Note: The output will depend on your specific implementation.*
 </details>
 
 ---
