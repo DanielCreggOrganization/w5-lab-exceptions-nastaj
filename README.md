@@ -1,40 +1,32 @@
 # Java Exception Handling Lab
 
-Java exceptions are events that occur during the execution of a program and disrupt its normal flow. They signal that an error or unexpected condition has occurred, allowing your program to respond gracefully rather than crashing unexpectedly. Java's robust exception handling mechanism enables you to catch and manage these errors, ensuring your applications remain reliable and user-friendly.
-
-This lab is divided into several standalone sections, each focusing on a specific aspect of Java exception handling. Every section includes:
-- **An Explanation:** A brief description of the concept.
-- **An Example:** Practical code demonstrating the concept.
-- **A DIY Exercise:** A hands-on activity with an expected output dropdown to help you verify your work.
-
-You can complete each section independently, allowing you to learn and practice Java exceptions step by step.
+Java exceptions are events that occur during the execution of a program and signal that an error or unexpected condition has occurred. They allow your program to respond gracefully rather than crashing unexpectedly. This lab is divided into several standalone sections, each containing an explanation, an example, and a DIY exercise with an expected output dropdown. You can complete each section independently.
 
 ---
 
 ## Setup
 
-Before you begin any section, create a new Java package named `ie.atu.exceptions`. Use the **JAVA PROJECTS** pane in the Explorer panel on the left to create this package. Inside this package, create a class named `Main` (or another appropriate class for each section) and insert the main method. Add a simple print statement to ensure everything is set up correctly.
+Before you begin any section, create a new Java package named `ie.atu.exceptions`. Use the **JAVA PROJECTS** pane on the left to create this package. Inside this package, create a class named `Main` (or another appropriate class for each section) and insert the main method. Add a simple print statement to ensure everything is set up correctly.
 
 ---
 
 ## Agenda
 
 1. [Introduction to Exception Handling](#1-introduction-to-exception-handling)
-2. [Common Exceptions](#2-common-exceptions)
-3. [Checked vs Unchecked Exceptions](#3-checked-vs-unchecked-exceptions)
-4. [try-catch Blocks](#4-try-catch-blocks)
-5. [finally Block](#5-finally-block)
-6. [try-with-resources](#6-try-with-resources)
-7. [throw and throws Keywords](#7-throw-and-throws-keywords)
-8. [Custom Exceptions](#8-custom-exceptions)
-9. [Error vs Exception](#9-error-vs-exception)
+2. [Common Exceptions and try-catch Blocks](#2-common-exceptions-and-try-catch-blocks)
+3. [finally Block](#3-finally-block)
+4. [try-with-resources](#4-try-with-resources)
+5. [Checked vs Unchecked Exceptions](#5-checked-vs-unchecked-exceptions)
+6. [throw and throws Keywords](#6-throw-and-throws-keywords)
+7. [Custom Exceptions](#7-custom-exceptions)
+8. [Error vs Exception](#8-error-vs-exception)
 
 ---
 
 ## 1. Introduction to Exception Handling
 
 ### Explanation
-An **exception** in Java is an event that disrupts the normal flow of a program's execution. When an error occurs within a method, an exception object is created and passed to the runtime system—a process known as "throwing an exception." Exception handling enables your program to manage these unexpected events gracefully.
+Java exceptions are events that occur during the execution of a program and signal that an error or unexpected condition has occurred. They allow your program to respond gracefully rather than crashing unexpectedly. Exception handling in Java provides a robust framework for catching and managing these errors.
 
 ### Example
 ```java
@@ -58,7 +50,7 @@ Exception in thread "main" java.lang.NullPointerException
 </details>
 
 ### DIY Exercise 🔦
-- **Task**: Modify the above code so that it first checks whether `text` is `null` before attempting to access its length.  
+- **Task**: Modify the above code so that it first checks whether `text` is `null` before attempting to access its length.
 - **Hint**: Use an if-statement to verify if `text` is not `null`. If it is `null`, print a custom message instead of calling `length()`.
 
 <details>
@@ -73,7 +65,7 @@ Text is null. Cannot retrieve length.
 
 ---
 
-## 2. Common Exceptions
+## 2. Common Exceptions and try-catch Blocks
 
 ### Explanation
 Java provides several built-in exceptions that represent common error conditions:
@@ -82,8 +74,10 @@ Java provides several built-in exceptions that represent common error conditions
 - **`ArithmeticException`**: Happens when an illegal arithmetic operation is performed (for example, division by zero).
 - **`IOException`**: Signals that an input/output operation has failed.
 
+A try-catch block lets you execute code that might throw an exception and then catch and handle that exception without crashing the program. In the try block, you place the code that might fail; in the catch block, you specify how to handle the exception.
+
 ### Example
-In this example, we intentionally trigger a `NullPointerException` by calling a method on a null reference. This try-catch block demonstrates how to handle an exception without giving away the solution for the DIY exercise.
+In this example, we intentionally trigger a `NullPointerException` by calling a method on a null reference. This demonstrates how to use a try-catch block to handle an exception.
 
 ```java
 public class CommonExceptions {
@@ -126,7 +120,101 @@ Caught ArithmeticException: / by zero
 
 ---
 
-## 3. Checked vs Unchecked Exceptions
+## 3. finally Block
+
+### Explanation
+The `finally` block is used in conjunction with try-catch blocks. It executes code regardless of whether an exception was thrown or caught, and is often used for cleanup operations like closing files or releasing resources.
+
+### Example
+```java
+public class FinallyDemo {
+    public static void main(String[] args) {
+        try {
+            int[] numbers = {1, 2, 3};
+            System.out.println(numbers[5]); // This will throw an exception.
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Caught exception: Index out of bounds!");
+        } finally {
+            System.out.println("Cleanup: This message prints regardless of exceptions.");
+        }
+    }
+}
+```
+
+<details>
+<summary>Expected Output</summary>
+
+```
+Caught exception: Index out of bounds!
+Cleanup: This message prints regardless of exceptions.
+```
+
+</details>
+
+### DIY Exercise 🔦
+- **Task**: Create a program that simulates opening and processing a file. Use a try-catch block to handle a potential exception, and include a finally block that prints a message like "File processing complete."
+- **Hint**: You may simulate file processing with print statements rather than actual file I/O.
+
+<details>
+<summary>Expected Output</summary>
+
+```
+Caught exception: [Exception message]
+File processing complete.
+```
+
+*Note: The exception message will depend on your simulation.*
+</details>
+
+---
+
+## 4. try-with-resources
+
+### Explanation
+The try-with-resources statement simplifies resource management by automatically closing resources when the try block is exited. It works with any object that implements the `AutoCloseable` interface, such as files or network connections.
+
+### Example
+```java
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class TryWithResourcesDemo {
+    public static void main(String[] args) {
+        try (BufferedReader br = new BufferedReader(new FileReader("example.txt"))) {
+            String line = br.readLine();
+            System.out.println("First line: " + line);
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        }
+    }
+}
+```
+
+<details>
+<summary>Expected Output</summary>
+
+If the file "example.txt" does not exist:
+```
+IOException: <error message>
+```
+</details>
+
+### DIY Exercise 🔦
+- **Task**: Write a program that uses try-with-resources to read and print the first line of a file. Handle the case where the file is missing by catching the appropriate exception and printing an error message.
+- **Hint**: Use `BufferedReader` and `FileReader` as shown in the example.
+
+<details>
+<summary>Expected Output</summary>
+
+```
+IOException: <error message indicating file not found>
+```
+</details>
+
+---
+
+## 5. Checked vs Unchecked Exceptions
 
 ### Explanation
 Java exceptions are divided into two main categories:
@@ -186,145 +274,7 @@ Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 0
 
 ---
 
-## 4. try-catch Blocks
-
-### Explanation
-A try-catch block allows you to execute code that might throw an exception, and then catch and handle that exception without crashing the program. The code that might fail is placed in the try block, and the error-handling code is in the catch block.
-
-### Example
-```java
-public class TryCatchDemo {
-    public static void main(String[] args) {
-        try {
-            int division = 10 / 0;  // This will throw an ArithmeticException.
-        } catch (ArithmeticException e) {
-            System.out.println("Error: Cannot divide by zero!");
-        }
-    }
-}
-```
-
-<details>
-<summary>Expected Output</summary>
-
-```
-Error: Cannot divide by zero!
-```
-
-</details>
-
-### DIY Exercise 🔦
-- **Task**: Write a program that defines an array of 5 integers. Ask the user to input an index, and then try to access the array at that index using a try-catch block to handle any `ArrayIndexOutOfBoundsException`.
-- **Hint**: Use a `Scanner` to read user input and wrap the array access code in a try-catch structure.
-
-<details>
-<summary>Expected Output</summary>
-
-*If the user enters an invalid index (e.g., 7):*
-```
-Caught ArrayIndexOutOfBoundsException: 7
-```
-
-*If the user enters a valid index, the corresponding integer from the array is printed.*
-</details>
-
----
-
-## 5. finally Block
-
-### Explanation
-The `finally` block is used in conjunction with try-catch blocks. It executes code regardless of whether an exception was thrown or caught, and is often used for cleanup operations like closing files or releasing resources.
-
-### Example
-```java
-public class FinallyDemo {
-    public static void main(String[] args) {
-        try {
-            int[] numbers = {1, 2, 3};
-            System.out.println(numbers[5]); // This will throw an exception.
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Caught exception: Index out of bounds!");
-        } finally {
-            System.out.println("Cleanup: This message prints regardless of exceptions.");
-        }
-    }
-}
-```
-
-<details>
-<summary>Expected Output</summary>
-
-```
-Caught exception: Index out of bounds!
-Cleanup: This message prints regardless of exceptions.
-```
-
-</details>
-
-### DIY Exercise 🔦
-- **Task**: Create a program that simulates opening and processing a file. Use a try-catch block to handle a potential exception, and include a finally block that prints a message like "File processing complete."  
-- **Hint**: You may simulate file processing with print statements rather than actual file I/O.
-
-<details>
-<summary>Expected Output</summary>
-
-```
-Caught exception: [Exception message]
-File processing complete.
-```
-
-*Note: The exception message will depend on your simulation.*
-</details>
-
----
-
-## 6. try-with-resources
-
-### Explanation
-The try-with-resources statement simplifies resource management by automatically closing resources when the try block is exited. It works with any object that implements the `AutoCloseable` interface, such as files or network connections.
-
-### Example
-```java
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-
-public class TryWithResourcesDemo {
-    public static void main(String[] args) {
-        try (BufferedReader br = new BufferedReader(new FileReader("example.txt"))) {
-            String line = br.readLine();
-            System.out.println("First line: " + line);
-        } catch (IOException e) {
-            System.out.println("IOException: " + e.getMessage());
-        }
-    }
-}
-```
-
-<details>
-<summary>Expected Output</summary>
-
-If the file "example.txt" does not exist:
-```
-IOException: <error message>
-```
-</details>
-
-### DIY Exercise 🔦
-- **Task**: Write a program that uses try-with-resources to read and print the first line of a file. Handle the case where the file is missing by catching the appropriate exception and printing an error message.
-- **Hint**: Use `BufferedReader` and `FileReader` as shown in the example.
-
-<details>
-<summary>Expected Output</summary>
-
-```
-IOException: <error message indicating file not found>
-```
-</details>
-
----
-
-## 7. throw and throws Keywords
+## 6. throw and throws Keywords
 
 ### Explanation
 - **`throw`**: Used to explicitly throw an exception within a method or block of code.
@@ -400,7 +350,7 @@ Caught exception: Invalid score
 
 ---
 
-## 8. Custom Exceptions
+## 7. Custom Exceptions
 
 ### Explanation
 Custom exceptions allow you to create your own exception types to represent specific error conditions in your application. You create a custom exception by extending the `Exception` class (or one of its subclasses).
@@ -460,7 +410,7 @@ Error: Insufficient funds. Withdrawal amount exceeds balance.
 
 ---
 
-## 9. Error vs Exception
+## 8. Error vs Exception
 
 ### Explanation
 Both **errors** and **exceptions** are subclasses of the `Throwable` class, but they are used for different scenarios:
@@ -509,11 +459,10 @@ Program continues normally.
 
 In this lab, you learned about:
 - **Exception Handling**: The mechanism for managing runtime anomalies.
-- **Common Exceptions**: Such as `NullPointerException`, `ArrayIndexOutOfBoundsException`, and `ArithmeticException`.
-- **Checked vs Unchecked Exceptions**: The distinction between compile-time and runtime exceptions.
-- **try-catch Blocks**: How to catch and handle exceptions.
+- **Common Exceptions and try-catch Blocks**: How to use try-catch blocks to catch common exceptions.
 - **finally Block**: How to execute cleanup code irrespective of exceptions.
 - **try-with-resources**: How to automatically manage resources.
+- **Checked vs Unchecked Exceptions**: The distinction between compile-time and runtime exceptions.
 - **throw and throws**: How to explicitly throw exceptions and declare exception-throwing methods.
 - **Custom Exceptions**: How to create your own exception classes.
 - **Error vs Exception**: The differences between critical errors and manageable exceptions.
