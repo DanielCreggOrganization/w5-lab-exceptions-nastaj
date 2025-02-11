@@ -171,21 +171,18 @@ File processing complete.
 ## 4. try-with-resources
 
 ### Explanation
-The try-with-resources statement simplifies resource management by automatically closing resources when the try block is exited. It works with any object that implements the `AutoCloseable` interface, such as files or network connections.
+The try-with-resources statement simplifies resource management by automatically closing resources when the try block is exited. It works with any object that implements the `AutoCloseable` interface, such as Scanner, BufferedReader, etc. In this example, we use a Scanner to read input from the console (System.in).
 
 ### Example
 ```java
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.util.Scanner;
 
-public class TryWithResourcesDemo {
+public class TryWithResourcesScannerDemo {
     public static void main(String[] args) {
-        try (BufferedReader br = new BufferedReader(new FileReader("example.txt"))) {
-            String line = br.readLine();
-            System.out.println("First line: " + line);
-        } catch (IOException e) {
-            System.out.println("IOException: " + e.getMessage());
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.print("Enter your name: ");
+            String name = scanner.nextLine();
+            System.out.println("Hello, " + name + "!");
         }
     }
 }
@@ -194,22 +191,27 @@ public class TryWithResourcesDemo {
 <details>
 <summary>Expected Output</summary>
 
-If the file "example.txt" does not exist:
 ```
-IOException: <error message>
+Enter your name: Alice
+Hello, Alice!
 ```
+
+*Note: The output will depend on the user's input.*
 </details>
 
 ### DIY Exercise 🔦
-- **Task**: Write a program that uses try-with-resources to read and print the first line of a file. Handle the case where the file is missing by catching the appropriate exception and printing an error message.
-- **Hint**: Use `BufferedReader` and `FileReader` as shown in the example.
+- **Task**: Write a program that uses try-with-resources to create a Scanner that reads an integer from the console and then prints the square of that number.
+- **Hint**: Use a try-with-resources block to ensure the Scanner is closed automatically.
 
 <details>
 <summary>Expected Output</summary>
 
 ```
-IOException: <error message indicating file not found>
+Enter a number: 5
+Square: 25
 ```
+
+*Note: The output will vary based on the input provided.*
 </details>
 
 ---
