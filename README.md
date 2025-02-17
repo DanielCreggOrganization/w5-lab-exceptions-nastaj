@@ -1,6 +1,14 @@
 # Java Exception Handling Lab
 
-Java exceptions are events that occur during the execution of a program and signal that an error or unexpected condition has occurred. They allow your program to respond gracefully rather than crashing unexpectedly. This lab is divided into several standalone sections, each containing an explanation, an example, and a DIY exercise with an expected output dropdown. You can complete each section independently.
+Java exceptions are events that occur during the execution of a program, they signal that an error or unexpected condition has occurred. Exceptions allow your program to handle these events gracefully rather than crashing unexpectedly.  
+
+This lab is divided into several standalone sections, each containing 
+
+1. An Explanation
+2. An example
+3. A DIY exercise
+
+You can complete each section below independently.
 
 ---
 
