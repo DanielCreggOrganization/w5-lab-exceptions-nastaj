@@ -5,8 +5,8 @@ Java exceptions are events that occur during the execution of a program, they si
 This lab is divided into several standalone sections, each containing 
 
     1. An Explanation
-    2. An example
-    3. A DIY exercise
+    2. An Example
+    3. A DIY Exercise
 
 You can complete each section below independently.
 
