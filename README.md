@@ -217,9 +217,9 @@ The try-with-resources statement simplifies resource management by automatically
 
 #### try-with-resources Flowchart
 ```mermaid
-graph TD;
+graph TD
     A[Start] --> B[Try Block with Resource]
-    B -->|Exception Occurs| C[Catch Block (Optional)]
+    B -->|Exception Occurs| C[Catch Block Optional]
     C --> D[Resource Automatically Closed]
     B -->|No Exception| D
     D --> E[Continue Execution]
