@@ -1,8 +1,6 @@
 # Java Exception Handling Lab
 
-Java exceptions are events that occur during the execution of a program, they signal that an error or unexpected condition has occurred. Exceptions allow your program to handle these events gracefully rather than crashing unexpectedly.  
-
-This lab is divided into several standalone sections, each containing 
+Java exceptions are events that occur during the execution of a program, they signal that an error or unexpected condition has occurred. Exceptions allow your program to handle these events gracefully rather than crashing. This lab is divided into several standalone sections, each containing 
 
     1. An Explanation
     2. An Example
@@ -14,7 +12,7 @@ You can complete each section below independently.
 
 ## Setup
 
-Before you begin any section bleow please complete these steps:  
+Before you begin any section below please complete these steps:  
     
     1. Create a new Java package named `ie.atu.exceptions`. Use the **JAVA PROJECTS** pane on the left to create this package.
     2. Inside this package, create a class named `Main`.
@@ -39,7 +37,17 @@ Before you begin any section bleow please complete these steps:
 ## 1. Introduction to Exception Handling
 
 ### Explanation
-Java exceptions are events that occur during the execution of a program and signal that an error or unexpected condition has occurred. They allow your program to respond gracefully rather than crashing unexpectedly. Exception handling in Java provides a robust framework for catching and managing these errors. Below is an example of an exception being generated. 
+Java exceptions are events that occur during the execution of a program and signal that an error or unexpected condition has occurred. They allow your program to respond gracefully rather than crashing.
+
+#### Exception Handling Flowchart
+```mermaid
+graph TD;
+    A[Start] --> B[Code Execution]
+    B -->|Exception Occurs| C[Exception is Thrown]
+    C --> D[Program Terminates Abruptly]
+    C --> E[Exception is Handled]
+    E --> F[Program Continues]
+```
 
 ### Example
 ```java
@@ -87,7 +95,17 @@ Java provides several built-in exceptions that represent common error conditions
 - **`ArithmeticException`**: Happens when an illegal arithmetic operation is performed (for example, division by zero).
 - **`IOException`**: Signals that an input/output operation has failed.
 
-A try-catch block lets you execute code that might throw an exception and then catch and handle that exception without crashing the program. In the try block, you place the code that might fail; in the catch block, you specify how to handle the exception.
+A try-catch block lets you execute code that might throw an exception and then catch and handle that exception without crashing the program. In the try block, you place the code that might fail; in the catch block, you handle the exception.
+
+#### try-catch Block Flowchart
+```mermaid
+graph TD;
+    A[Start] --> B[Try Block]
+    B -->|No Exception| C[Continue Execution]
+    B -->|Exception Occurs| D[Catch Block]
+    D --> E[Exception Handled]
+    E --> F[Continue Execution]
+```
 
 ### Example
 In this example, we intentionally trigger a `NullPointerException` by calling a method on a null reference. This demonstrates how to use a try-catch block to handle an exception.
@@ -138,6 +156,17 @@ Caught ArithmeticException: / by zero
 ### Explanation
 The `finally` block is used in conjunction with try-catch blocks. It executes code regardless of whether an exception was thrown or caught, and is often used for cleanup operations like closing files or releasing resources.
 
+#### try-catch-finally Block Flowchart
+```mermaid
+graph TD;
+    A[Start] --> B[Try Block]
+    B -->|No Exception| C[Finally Block]
+    B -->|Exception Occurs| D[Catch Block]
+    D --> E[Finally Block]
+    C --> F[Continue Execution]
+    E --> F[Continue Execution]
+```
+
 ### Example
 ```java
 public class FinallyDemo {
@@ -184,7 +213,17 @@ File processing complete.
 ## 4. try-with-resources
 
 ### Explanation
-The try-with-resources statement simplifies resource management by automatically closing resources when the try block is exited. It works with any object that implements the `AutoCloseable` interface, such as Scanner, BufferedReader, etc. In this example, we use a Scanner to read input from the console (System.in).
+The try-with-resources statement simplifies resource management by automatically closing resources when the try block is exited. It works with any object that implements the `AutoCloseable` interface, such as files or database connections.
+
+#### try-with-resources Flowchart
+```mermaid
+graph TD;
+    A[Start] --> B[Try Block with Resource]
+    B -->|Exception Occurs| C[Catch Block (Optional)]
+    C --> D[Resource Automatically Closed]
+    B -->|No Exception| D
+    D --> E[Continue Execution]
+```
 
 ### Example
 ```java
@@ -235,6 +274,16 @@ Square: 25
 Java exceptions are divided into two main categories:
 - **Checked Exceptions**: These exceptions are checked at compile time. They must be either caught using a try-catch block or declared in the method signature with the `throws` keyword (e.g., `IOException`).
 - **Unchecked Exceptions**: These are subclasses of `RuntimeException` (e.g., `NullPointerException`, `ArithmeticException`). They are not checked at compile time and typically indicate programming errors.
+
+#### Checked vs Unchecked Exceptions Diagram
+```mermaid
+graph TD;
+    A[Throwable] --> B[Checked Exception]
+    A --> C[Unchecked Exception]
+    B -->|Compile-Time Check| D[IOException]
+    C -->|Runtime Check| E[NullPointerException]
+    C -->|Runtime Check| F[ArithmeticException]
+```
 
 ### Example
 ```java
@@ -295,6 +344,17 @@ Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 0
 - **`throw`**: Used to explicitly throw an exception within a method or block of code.
 - **`throws`**: Declares that a method may throw one or more exceptions, which must then be handled by the calling code.
 
+#### throw and throws Flowchart
+```mermaid
+graph TD;
+    A[Start] --> B[Method Call]
+    B -->|Throws Exception| C[Exception Propagated]
+    B -->|Handles Exception| D[Exception Handled]
+    C --> E[Caller Method]
+    E -->|Catches Exception| F[Exception Handled]
+    E -->|Does Not Catch| G[Program Terminates]
+```
+
 ### Example
 **Using `throw`:**
 ```java
@@ -349,7 +409,7 @@ Exception handled: An error occurred.
 
 ### DIY Exercise 🔦
 - **Task**:  
-  1. Create a method `calculateGrade` that accepts a student's score. If the score is negative or greater than 100, use `throw` to raise an `IllegalArgumentException` with the message "Invalid score".  
+  1. Create a method `calculateGrade` that accepts a student's score. If the score is negative or greater than 100, use `throw` to raise an `IllegalArgumentException` with the message "Invalid score."
   2. In your main method, call `calculateGrade` and use a try-catch block to catch and print the error message.
 - **Hint**: Ensure that the method either handles the exception internally or declares it using `throws` so that the caller can handle it.
 
@@ -369,6 +429,15 @@ Caught exception: Invalid score
 
 ### Explanation
 Custom exceptions allow you to create your own exception types to represent specific error conditions in your application. You create a custom exception by extending the `Exception` class (or one of its subclasses).
+
+#### Custom Exception Flowchart
+```mermaid
+graph TD;
+    A[Start] --> B[Define Custom Exception]
+    B --> C[Throw Custom Exception]
+    C --> D[Catch Custom Exception]
+    D --> E[Handle Custom Exception]
+```
 
 ### Example
 **Creating a custom exception:**
@@ -410,7 +479,7 @@ Error: User must be at least 18 years old.
 
 ### DIY Exercise 🔦
 - **Task**:  
-  Create a custom exception called `InsufficientFundsException` (extending `Exception`). Then, write a `BankAccount` class that includes a `withdraw` method. If a withdrawal amount exceeds the account balance, the method should throw an `InsufficientFundsException`.
+  Create a custom exception called `InsufficientFundsException` (extending `Exception`). Then, write a `BankAccount` class that includes a `withdraw` method. If a withdrawal amount exceeds the account balance, throw the `InsufficientFundsException`.
 - **Hint**: In the `withdraw` method, check if the withdrawal amount is greater than the balance and throw the exception with a suitable message if so.
 
 <details>
@@ -430,7 +499,18 @@ Error: Insufficient funds. Withdrawal amount exceeds balance.
 ### Explanation
 Both **errors** and **exceptions** are subclasses of the `Throwable` class, but they are used for different scenarios:
 - **Exceptions**: Represent conditions that a program can catch and handle, such as invalid input or missing files.
-- **Errors**: Represent serious problems that are usually not handled by the application (e.g., `OutOfMemoryError`, `StackOverflowError`). They indicate issues in the runtime environment and are not meant to be caught. Errors often indicate severe problems that cannot be recovered from within the application. For example, if the JVM runs out of memory (OutOfMemoryError), there might not be enough resources to perform any meaningful recovery actions.
+- **Errors**: Represent serious problems that are usually not handled by the application (e.g., `OutOfMemoryError`, `StackOverflowError`). They indicate issues in the runtime environment and are not meant to be caught by typical applications.
+
+#### Error vs Exception Diagram
+```mermaid
+graph TD;
+    A[Throwable] --> B[Exception]
+    A --> C[Error]
+    B -->|Recoverable| D[NullPointerException]
+    B -->|Recoverable| E[IOException]
+    C -->|Non-Recoverable| F[OutOfMemoryError]
+    C -->|Non-Recoverable| G[StackOverflowError]
+```
 
 ### Example
 ```java
@@ -457,7 +537,7 @@ Program continues normally.
 
 ### DIY Exercise 🔦
 - **Task**:  
-  Write a short Java program that includes comments explaining why errors (such as `OutOfMemoryError`) are generally not caught by try-catch blocks. Optionally, simulate an error by writing a comment that explains what would happen if you tried to catch such an error.
+  Write a short Java program that includes comments explaining why errors (such as `OutOfMemoryError`) are generally not caught by try-catch blocks. Optionally, simulate an error by writing a comment to throw an error, but do not actually throw it.
 - **Hint**: Focus on writing clear code comments that explain the severity of errors compared to exceptions.
 
 <details>
@@ -481,7 +561,5 @@ In this lab, you learned about:
 - **throw and throws**: How to explicitly throw exceptions and declare exception-throwing methods.
 - **Custom Exceptions**: How to create your own exception classes.
 - **Error vs Exception**: The differences between critical errors and manageable exceptions.
-
-Each section is designed to be self-contained so you can work on them independently.
 
 Enjoy exploring Java's exception handling mechanisms!
