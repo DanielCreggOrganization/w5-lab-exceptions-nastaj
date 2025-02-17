@@ -430,7 +430,7 @@ Error: Insufficient funds. Withdrawal amount exceeds balance.
 ### Explanation
 Both **errors** and **exceptions** are subclasses of the `Throwable` class, but they are used for different scenarios:
 - **Exceptions**: Represent conditions that a program can catch and handle, such as invalid input or missing files.
-- **Errors**: Represent serious problems that are usually not handled by the application (e.g., `OutOfMemoryError`, `StackOverflowError`). They indicate issues in the runtime environment and are not meant to be caught.
+- **Errors**: Represent serious problems that are usually not handled by the application (e.g., `OutOfMemoryError`, `StackOverflowError`). They indicate issues in the runtime environment and are not meant to be caught. Errors often indicate severe problems that cannot be recovered from within the application. For example, if the JVM runs out of memory (OutOfMemoryError), there might not be enough resources to perform any meaningful recovery actions.
 
 ### Example
 ```java
