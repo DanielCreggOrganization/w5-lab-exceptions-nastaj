@@ -39,7 +39,7 @@ Before you begin any section bleow please complete these steps:
 ## 1. Introduction to Exception Handling
 
 ### Explanation
-Java exceptions are events that occur during the execution of a program and signal that an error or unexpected condition has occurred. They allow your program to respond gracefully rather than crashing unexpectedly. Exception handling in Java provides a robust framework for catching and managing these errors.
+Java exceptions are events that occur during the execution of a program and signal that an error or unexpected condition has occurred. They allow your program to respond gracefully rather than crashing unexpectedly. Exception handling in Java provides a robust framework for catching and managing these errors. Below is an example of an exception being generated. 
 
 ### Example
 ```java
